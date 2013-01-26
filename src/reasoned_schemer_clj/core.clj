@@ -147,5 +147,97 @@
              (firsto '((a) (b) (c)) y)
              (== (lcons x y) r)))
 
+(run* (l)
+    (fresh (d x y w s)
+      (conso w '(a n s) s) 
+      (resto l s)
+      (firsto l x)
+      (== 'b x)
+      (resto l d)
+      (firsto d y)
+      (== 'e y)))
+(empty? '(grape rain pear))
+
+(empty? '())
+
+(run* (q)
+      (emptyo '(grape raisin pear))
+      (== true q))
+
+(run* (q)
+      (emptyo '())
+      (== true q))
+
+(run* (x)
+      (emptyo x))
+
+(def nullo
+  (fn [x]
+    (== x '())))
+
+(run* (x)
+      (nullo x))
+
+(source emptyo)
+
+(clojure.core/= 'pear 'plum)
+(clojure.core/= 'plum 'plum)
+
+(run* (q)
+      (== 'pear 'plum)
+      (== true q))
+
+(def eqo (fn [x y]
+       (== x y)))
+
+(run* (q)
+      (eqo 'pear 'plum)
+      (== true q))
+
+
+(defn pair? [x]
+  (or (lcons? x) (and (coll? x) (seq x))))
+
+
+; does not work in clojure
+(pair? '((split) . pea)
+ )
+
+; this works
+(pair? (lcons '(split) 'pea))
+
+
+(pair? '())
+(pair? '(pear))
+(first '(pear))
+
+(rest '(pear))
+
+(lcons '(split) 'pea)
+
+(def pairo (fn [p]
+             (fresh (a d)
+                    (conso a d p))))
+
+(run* (q)
+      (pairo (lcons q q))
+      (== true q))
+
+(run* (q)
+      (pairo '())
+      (== true q))
+
+(run* (q)
+      (pairo 'pair)
+      (== true q))
+
+(run* (r)
+      (pairo r))
+
+(run* (r)
+      (pairo (lcons r 'pear)))
+
+
+
 ;(use 'reasoned-schemer-clj)
 ;;(doc project)
