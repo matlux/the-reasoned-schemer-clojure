@@ -1,4 +1,13 @@
-the-reasoned-schemer-clojure
-============================
+# reasoned-schemer-clj
 
-This contains examples from the famous LISP/scheme book called "The Reasoned Schemer" which inspired core.logic implementation. The book is one of the best tutorial available to learn core.logic. However the examples are in scheme. Some of the same examples from the book have been used and translated into Clojure here.
+A Clojure library designed to ... well, that part is up to you.
+
+## Usage
+
+FIXME
+
+## License
+
+Copyright © 2013 FIXME
+
+Distributed under the Eclipse Public License, the same as Clojure.
