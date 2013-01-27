@@ -178,7 +178,7 @@
 (run* (x)
       (nullo x))
 
-(source emptyo)
+;(source emptyo)
 
 (clojure.core/= 'pear 'plum)
 (clojure.core/= 'plum 'plum)
@@ -199,16 +199,16 @@
   (or (lcons? x) (and (coll? x) (seq x))))
 
 
-; does not work in clojure
-(pair? '((split) . pea)
- )
+(pair? (llist '(split) 'pea))
 
 ; this works
 (pair? (lcons '(split) 'pea))
 
-
+;;this does not really work
 (pair? '())
-(pair? '(pear))
+(pair? (llist 'pear nil))
+
+
 (first '(pear))
 
 (rest '(pear))
@@ -238,6 +238,119 @@
       (pairo (lcons r 'pear)))
 
 
+;; Chapter 3
+(seq? '((a) (a b) c))
 
-;(use 'reasoned-schemer-clj)
-;;(doc project)
+(seq? '())
+
+(seq? 's)
+
+(seq? (list 'd 'a 't 'e 's))
+
+(defn listo [l]
+  (conde
+    [(emptyo l) s#]
+    [(pairo l)
+     (fresh [d]
+       (resto l d)
+       (listo d))]))
+
+(fresh (d)
+       (resto 'l d)
+       (listo d))
+
+(run* (x)
+      (listo (list 'a 'b x 'd)))
+
+(run 1 (x)
+      (listo (llist 'a 'b 'c x)))
+
+; don't run this one it's an infinite loop
+;(run* (x)
+;     (listo (llist 'a 'b 'c x)))
+
+
+
+(run 5 (x)
+     (listo (llist 'a 'b 'c x)))
+
+;; this returns no results. It does not work like in the book. You have to use the list instead (see above) to be consistent with the book.
+;; It seems llist should be used when a fresh variable is on the right most side of the listo. Otherwise list should be used ?
+(run 5 (x)
+     (listo (llist 'a 'b 'c x 'd)))
+
+(defn lol? [l]
+  (cond
+   (empty? l) true
+   (seq? (first l)) (lol? (rest l))
+   :else false))
+
+
+(lol? '((1 2 3) (4 5 6)))
+;true
+
+(defn lolo [l]
+  (conde
+   [(emptyo l) s#]
+   [(fresh (a)
+           (firsto l a)
+           (listo a))
+    (fresh (b)
+           (resto l b)
+           (lolo b))]))
+
+(run 1 (l)
+     (lolo l))
+
+(run 1 (q)
+     (fresh (x y)
+            (lolo '(('a 'b) (x 'c) ('d y)))
+            (== true q)))
+
+
+(run 1 (q)
+     (fresh (x)
+            (lolo (list (list 'a 'b) x))
+            (== true q)))
+
+(defn twino [s]
+  (fresh (x y)
+         (conso x y s)
+         (conso x '() y)))
+(defn twino2 [s]
+  (fresh (x)
+         (conso x (list x) s)))
+
+(defn twino3 [s]
+  (fresh (x)
+         (== (list x x) s)))
+
+(run* (q)
+      (twino '(tofu tofu))
+      (== true q))
+
+(run* (z)
+      (twino3 (list z 'tofu)))
+
+(defn loto [l]
+  (conde
+   [(emptyo l) s#]
+   [(fresh (a)
+           (firsto l a)
+           (twino a))
+    (fresh (d)
+           (resto l d)
+           (loto d))]))
+
+(run 1 (z)
+     (loto (llist (list 'g 'g) z)))
+
+(run 5 (r)
+     (fresh (w x y z)
+            (loto (llist (list 'g 'g) (list 'e w) (list x y) z))
+            (== (list w (list x y) z) r)))
+
+
+(use 'reasoned-schemer-clj.core :reload)
+;(doc clojure.core.logic/distinctfd)
+;(source seq?)
