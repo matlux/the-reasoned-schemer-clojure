@@ -4,6 +4,7 @@
         [clojure.core.logic.arithmetic :only [>= <= > < =]])
 )
 
+;; Chapter 1: Playthings
 
 (run* [q]
       (== q true))
@@ -126,6 +127,7 @@
             c (conde
                [(== true q) s#])]
         b))
+;; Chapter 2: Teaching Old Toys New Tricks
 
 (run* (r)
       (fresh (x y)
@@ -238,7 +240,7 @@
       (pairo (lcons r 'pear)))
 
 
-;; Chapter 3
+;; Chapter 3: Seeing Old Friends in New Ways
 (seq? '((a) (a b) c))
 
 (seq? '())
@@ -419,6 +421,69 @@
 (run 5 [l]
       (pmembero 'tofu l))
 
+;this is not working like in the book: Only getting one true i.e. (true) instead of (true true)
+(run 5 [q]
+     (pmembero 'tofu (list 'a 'b 'tofu 'd 'tofu))
+     (== true q))
+
+(defn pmembero2 [x l]
+  (conde
+   [(emptyo l) u#]
+   [(eq-caro l x) (resto l '())]
+   [(eq-caro l x) s#]
+   [(fresh (d)
+           (resto l d)
+           (pmembero x d))]))
+
+;; this is not working like in the book: Only getting one true i.e. (true) instead of (true true). Not sure why?
+(run 5 [q]
+     (pmembero2 'tofu (list 'a 'b 'tofu 'd 'tofu))
+     (== true q))
+
+(run 5 [l]
+     (pmembero2 'tofu l))
+
+(defn pmembero3 [x l]
+  (conde
+   [(emptyo l) u#]
+   [(eq-caro l x) (resto l '())]
+   [(eq-caro l x) (fresh (a d)
+                         (resto l (llist a d)))]
+   [(fresh (d)
+           (resto l d)
+           (pmembero x d))]))
+
+;; not exactly like the book. Could it be for lack of "else" clause in the conde?
+(run 15 [l]
+      (pmembero3 'tofu l))
+
+(defn first-value [l]
+  (run 1 [y]
+       (membero y l)))
+
+(first-value (list 'pasta 'e 'fagioli))
+
+(defn memberrevo [x l]
+  (conde
+   [(emptyo l) u#]
+   [s# (fresh (d)
+              (resto l d)
+              (memberrevo x d))]
+   [(eq-caro l x)]))
+
+;; not working as expected. Is is because of lack of else clause again? Can anyone tell me how to simulate the else clause?
+(run* [x]
+      (memberrevo x (list 'pasta 'e 'fagioli)))
+
+(defn reverse-list [l]
+  (run* (y)
+        (memberrevo y l)))
+
+;; not working
+(reverse-list (list 'a 'b 'c))
+
+;; Chapter 4 : Members only
+
 
 
 (defn memo [x l out]
@@ -429,6 +494,8 @@
             (resto l d)
             (memo x d out))])
   )
+
+
 
 (defn rembero [x l out]
   (conde
