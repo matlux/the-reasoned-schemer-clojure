@@ -350,7 +350,107 @@
             (loto (llist (list 'g 'g) (list 'e w) (list x y) z))
             (== (list w (list x y) z) r)))
 
+(defn listofo [predo l]
+  (conde
+   [(emptyo l) s#]
+   [(fresh (a)
+           (firsto l a)
+           (predo a))
+    (fresh (d)
+           (resto l d)
+           (listofo predo d))]))
+
+(run 3 (out)
+     (fresh (w x y z)
+            (== (llist (list 'g 'g) (list 'e w) (list x y) z) out)
+            (listofo twino out)))
+
+(defn loto2 [l]
+  (listofo twino l))
+
+(defn eq-caro [l x]
+  (firsto l x))
+
+
+(defn membero2 [x l]
+  (conde
+   [(eq-caro l x) s#]
+   [(fresh (d)
+           (resto l d)
+           (membero2 x d))]))
+
+(run* [q]
+      (membero 'olive (list 'virgin 'olive 'oil))
+      (== true q))
+
+(run 1 [y]
+     (membero y (list 'hummus 'with 'pita)))
+(run* [y]
+     (membero2 y (list 'hummus 'with 'pita)))
+
+(defn identityo [l]
+  (run* [y]
+        (membero y l)))
+
+(run* [x]
+      (membero 'e (list 'pasta x 'fagioli)))
+
+(run 1 [x]
+     (membero 'e (list 'pasta 'e x 'fagioli)))
+(run 1 [x]
+      (membero 'e (list 'pasta x 'e 'fagioli)))
+
+(run* [r]
+      (fresh (x y)
+             (membero 'e (list 'pasta x 'fagioli y))
+             (== (list x y) r)))
+
+(run 5 [l]
+      (membero2 'tofu l))
+
+(defn pmembero [x l]
+  (conde
+   [(emptyo l) u#]
+   [(eq-caro l x) (resto l '())]
+   [(fresh (d)
+           (resto l d)
+           (pmembero x d))]))
+
+(run 5 [l]
+      (pmembero 'tofu l))
+
+
+
+(defn memo [x l out]
+  (conde
+    [(emptyo l) u#]
+    [(firsto l x) (== l out)]
+    [(fresh (d)
+            (resto l d)
+            (memo x d out))])
+  )
+
+(defn rembero [x l out]
+  (conde
+   [(emptyo l) (== '() out)]
+   [(firsto l x) (resto l out)]
+   [(fresh (res)
+           (fresh (d)
+                  (resto l d)
+                  (rembero x d res))
+           (fresh (a)
+                  (firsto l a)
+                  (conso a res out)))]))
+
+(run 1 [out]
+     (fresh (y)
+            (rembero 'peas (list 'a 'b y 'd 'peas 'e) out)))
+
+(run 1 [out]
+     (memo 'tofu (list 'a 'b 'tofu 'd 'tofu 'e) out))
+;(source membero)
 
 (use 'reasoned-schemer-clj.core :reload)
-;(doc clojure.core.logic/distinctfd)
+                                        ;(doc clojure.core.logic/distinctfd)
+
 ;(source seq?)
