@@ -484,6 +484,25 @@
 
 ;; Chapter 4 : Members only
 
+(defn mem [x l]
+  (cond
+   (empty? l) false
+   (clojure.core/= (first l) x) l
+   :else (mem x (rest l))))
+
+(mem 'tofu (list 'a 'b 'peas 'd 'peas 'e))
+
+(run* [out]
+      (== (mem 'tofu (list 'a 'b 'tofu 'd 'peas 'e)) out))
+
+
+(defn memo [x l out]
+  (conde
+   [(emptyo l) u#]
+   []))
+
+
+
 
 
 (defn memo [x l out]
