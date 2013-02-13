@@ -8,7 +8,7 @@ All the examples are under: [src/reasoned_schemer_clj/core.clj](https://github.c
 
 You can find the differences between The Reasoned Schemer and Clojure under:
 
-    [Differences from The Reasoned Schemer and Clojure](https://github.com/clojure/core.logic/wiki/Differences-from-The-Reasoned-Schemer)
+[Differences from The Reasoned Schemer and Clojure](https://github.com/clojure/core.logic/wiki/Differences-from-The-Reasoned-Schemer)
 
 ## Usage
 
