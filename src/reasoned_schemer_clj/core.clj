@@ -618,6 +618,11 @@
             (rembero y (list y 'd z 'e) (list y 'd 'e))
             (== (list y z) r)))
 
+(run* [w]
+     (fresh (y z out)
+            (rembero y (llist 'a 'b y 'd z w) out)))
+
+
 ;(source membero)
 (comment
 (use 'reasoned-schemer-clj.core :reload)

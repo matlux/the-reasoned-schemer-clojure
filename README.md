@@ -4,20 +4,18 @@ The book "The Reasoned Schemer" has inspired the development of Core Logic and i
 
 It's far from complete or perfect but I'm interested on feedback from Clojurians who went through the same experience (especially on the examples that do not work exactly like the book). Let me know if you found examples for which you have a more accurate translation.
 
-All the examples are under: src/reasoned_schemer_clj/core.clj
-
-    https://github.com/matlux/the-reasoned-schemer-clojure/blob/master/src/reasoned_schemer_clj/core.clj
+All the examples are under: [src/reasoned_schemer_clj/core.clj](https://github.com/matlux/the-reasoned-schemer-clojure/blob/master/src/reasoned_schemer_clj/core.clj)
 
 You can find the differences between The Reasoned Schemer and Clojure under:
 
-    https://github.com/clojure/core.logic/wiki/Differences-from-The-Reasoned-Schemer
+    [Differences from The Reasoned Schemer and Clojure](https://github.com/clojure/core.logic/wiki/Differences-from-The-Reasoned-Schemer)
 
 ## Usage
 
-FIXME
+Copy each examples one by one into a repl to experiment with core.logic
 
 ## License
 
-Copyright © 2013 FIXME
+Copyright © 2013 Mathieu Gauthron
 
 Distributed under the Eclipse Public License, the same as Clojure.
